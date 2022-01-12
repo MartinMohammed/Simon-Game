@@ -9,8 +9,10 @@ var started = false;
 // ------------ DETECT Keystrokes  --------------
 
 
-$(document).on("keypress", function(event){
+$(document).on("keypress", function(){
   if (!started){
+    // Start title
+    $("#level-title").text("Level " + level);
     nextSequence();
     started = true;
   }
@@ -34,11 +36,35 @@ $(".btn").on("click", function(){
   // one or more attributes fore very matched element
   var userChosenColour = $(this).attr("id");
   userClickedPattern.push(userChosenColour);
+
   // play sound of the user clicked button
   playSound(userChosenColour);
-  animatePress(userChosenColour)
-  checkAnswer(userClickedPattern.length - 1)
+  animatePress(userChosenColour);
+
+  checkAnswer(userClickedPattern.length - 1);
 });
+function checkAnswer(currentLevel){
+  if(userClickedPattern[currentLevel] === gamePattern[currentLevel]){
+    // we have to check if the user if finish with his sequence
+    if (userClickedPattern.length === gamePattern.length){
+      // Reset userClickedPattern
+      setTimeout(nextSequence, 1000);
+    }
+  }
+  else{
+    // game over screen --> add class to body
+
+    playSound("wrong")
+
+    $("body").addClass("game-over");
+    $("#level-title").text("Game Over, Press Any Key to Restart");
+
+    setTimeout(function(){
+      $("body").removeClass("game-over");
+    }, 200);
+    startOver();
+  }
+}
 
 // will animate the buttonand play audio of the random chosen colour
 function nextSequence(){
@@ -56,10 +82,6 @@ function nextSequence(){
     $("#" + randomChosenColour).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
     playSound(randomChosenColour);
 }
-function playSound(name){
-  let audio = new Audio("sounds/" + name + ".mp3");
-  audio.play();
-}
 
 function animatePress(currentColour){
   $("#" + currentColour).addClass("pressed");
@@ -69,27 +91,10 @@ function animatePress(currentColour){
   }, 100)
 }
 
-function checkAnswer(currentLevel){
-  if(userClickedPattern[currentLevel] === gamePattern[currentLevel]){
-    // we have to check if the user if finish with his sequence
-    if (userClickedPattern.length === gamePattern.length){
-      // Reset userClickedPattern
-      setTimeout(nextSequence, 1000);
-    }
-  }
-  else{
-    // game over screen --> add class to body
-
-    let wrong_audio = new Audio("sounds/wrong.mp3");
-    wrong_audio.play();
-
-    $("body").addClass("game-over");
-    setTimeout(function(){
-      $("body").removeClass("game-over");
-    }, 200);
-    $("#level-title").text("Game Over, Press Any Key to Restart");
-    startOver();
-  }
+// just take the file name 
+function playSound(name){
+  let audio = new Audio("sounds/" + name + ".mp3");
+  audio.play();
 }
 
 function startOver(){
