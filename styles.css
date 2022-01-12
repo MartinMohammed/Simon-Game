@@ -6,15 +6,46 @@ body {
 #level-title {
   font-family: 'Press Start 2P', cursive;
   font-size: 3rem;
-  margin:  5%;
+  margin: 5%;
   color: #FEF2BF;
+}
+
+footer {
+  color: #EEEEEE;
+  text-align: center;
+  font-family: 'Indie Flower', cursive;
+  padding-bottom: 3rem;
+}
+
+#footer a {
+  text-decoration: None;
+  display: block;
+  letter-spacing: 0.2rem;
+  transition: transform .2s;
+  padding-bottom: 10px;
+  /* Animation */
+}
+
+#footer a:hover {
+  transform: scale(1.5);
+  /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+/* DISPLAY PROPERTY SPECIFIES THE DISPLAY BEHAVIOR (THE TYPE OF RENDERING BOX) OF AN ELEMENT */
+.ref-github {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.ref-linkedIn {
+  color: gray;
+  font-size: 1rem;
 }
 
 .container {
   display: block;
   width: 50%;
   margin: auto;
-
 }
 
 .btn {
